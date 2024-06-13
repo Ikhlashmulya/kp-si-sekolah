@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@include('partials.header')
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -61,17 +49,25 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="/">
-                            {{-- <div class="sb-nav-link-icon"><img src="/icon/dashboard.svg" alt="dashboard" width="25">
-                            </div> --}}
                             Dashboard
                         </a>
                     </div>
                     <div class="nav">
-                        <a class="nav-link {{ request()->routeIs('data-siswa') ? 'active' : '' }}"
-                            href="{{ route('data-siswa') }}">
-                            {{-- <div class="sb-nav-link-icon"><img src="/icon/dashboard.svg" alt="dashboard" width="25">
-                            </div> --}}
-                            Data siswa
+                        <a class="nav-link {{ request()->routeIs('kelas') ? 'active' : '' }}"
+                            href="{{ route('kelas') }}">
+                            Kelas
+                        </a>
+                    </div>
+                    <div class="nav">
+                        <a class="nav-link {{ request()->routeIs('siswa') ? 'active' : '' }}"
+                            href="{{ route('siswa') }}">
+                            Siswa
+                        </a>
+                    </div>
+                    <div class="nav">
+                        <a class="nav-link {{ request()->routeIs('mutasi') ? 'active' : '' }}"
+                            href="{{ route('mutasi') }}">
+                            Mutasi Siswa
                         </a>
                     </div>
             </nav>
@@ -94,8 +90,4 @@
             </footer>
         </div>
     </div>
-    <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="/js/scripts.js"></script>
-</body>
-
-</html>
+@include('partials.footer')

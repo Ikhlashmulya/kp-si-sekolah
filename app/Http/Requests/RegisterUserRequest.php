@@ -24,7 +24,8 @@ class RegisterUserRequest extends FormRequest
         return [
             'username' => 'string',
             'name' => 'string',
-            'password' => 'string'
+            'password' => 'string',
+            'corfirm_password' => 'same:password'
         ];
     }
 }

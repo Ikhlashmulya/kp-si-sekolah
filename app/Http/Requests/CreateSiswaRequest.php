@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginUserRequest extends FormRequest
+class CreateSiswaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,11 @@ class LoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'string',
-            'password' => 'string'
+            'no_induk' => 'string',
+            'nisn' => 'string',
+            'nama' => 'string',
+            'jenis_kelamin' => 'in:L,P',
+            'kelas_id' => 'string'
         ];
     }
 }

@@ -24,37 +24,35 @@
                                     <h3 class="text-center font-weight-light my-4">Register</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('login') }}" method="POST">
+                                    <form action="{{ route('doRegister') }}" method="POST">
                                         @csrf
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="name" name="name" type="text"
-                                                placeholder="name" />
+                                                placeholder="name" required />
                                             <label for="name">name</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="username" name="username" type="text"
-                                                placeholder="username" />
+                                                placeholder="username" required />
                                             <label for="username">username</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="password" type="password"
-                                                placeholder="Password" name="password" />
+                                                placeholder="Password" name="password" required />
                                             <label for="password">Password</label>
                                         </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" id="inputRememberPassword" type="checkbox"
-                                                value="" />
-                                            <label class="form-check-label" for="inputRememberPassword">Remember
-                                                Password</label>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="confirm_password" type="password"
+                                                placeholder="Konfirmasi Password" name="confirm_password" required />
+                                            <label for="password">Konfirmasi password</label>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="password.html">Forgot Password?</a>
-                                            <button class="btn btn-primary" type="submit">Login</button>
+                                            <button class="btn btn-primary" type="submit">Register</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                    <div class="small"><a href="/login">Already have account? Sign in!</a></div>
                                 </div>
                             </div>
                         </div>
