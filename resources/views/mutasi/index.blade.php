@@ -48,6 +48,17 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        <tr>
+                            @foreach ($mutasiMasuk as $mm)
+                                <td>-</td>
+                                <td>{{ $mm->siswa->no_induk }}</td>
+                                <td>{{ $mm->siswa->nisn }}</td>
+                                <td>{{ $mm->siswa->nama }}</td>
+                                <td>{{ $mm->siswa->jenis_kelamin }}</td>
+                                <td>{{ $mm->tgl_keluar }}</td>
+                                <td>{{ $mm->asal_sekolah }}</td>
+                            @endforeach
+                        </tr>
                     </tbody>
                 </table>
             </div>

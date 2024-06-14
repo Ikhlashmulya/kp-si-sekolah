@@ -72,6 +72,7 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -81,16 +82,21 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @foreach ($siswa as $s)
                             <tr>
-                                <td>-</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $s->no_induk }}</td>
                                 <td>{{ $s->nisn }}</td>
                                 <td>{{ $s->nama }}</td>
                                 <td>{{ $s->jenis_kelamin }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ route('siswa.edit', $s) }}">Edit</a>
+                                    <a class="btn btn-danger" onclick="return confirm('anda yakin?')" href="{{ route('siswa.delete', $s)}}">Delete</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

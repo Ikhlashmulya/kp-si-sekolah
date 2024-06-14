@@ -10,4 +10,5 @@
     <title>SI Sekolah</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ url('icon/azr.png') }}">
 </head>

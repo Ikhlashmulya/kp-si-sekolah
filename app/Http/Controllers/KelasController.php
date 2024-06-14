@@ -7,10 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class KelasController extends Controller
 {
-    public function index(): Response
+    public function index(): View
     {
         $kelas = Kelas::withCount([
             'siswa as laki_laki' => function ($query) {
@@ -21,7 +22,7 @@ class KelasController extends Controller
             }
         ])->get();
 
-        return response()->view('kelas', ['kelas' => $kelas]);
+        return view('kelas.index', compact('kelas'));
     }
 
     public function store(Request $request): RedirectResponse
