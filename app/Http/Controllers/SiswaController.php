@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Models\Kelas;
+use App\Models\MutasiMasuk;
 use App\Models\Siswa;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class SiswaController extends Controller
@@ -32,7 +31,15 @@ class SiswaController extends Controller
     }
 
     public function store(CreateSiswaRequest $request): RedirectResponse {
-        DB::table('siswa')->insert($request->validated());
+        $siswa = $request->only(['no_induk', 'nisn', 'nama', 'jenis_kelamin', 'kelas_id']);
+        $mutasiMasuk = $request->only(['tgl_masuk', 'asal_sekolah']);
+
+        $lastId = DB::table('siswa')->insertGetId($siswa);
+        DB::table('mutasi_masuk')->insert([
+            'siswa_id' => $lastId,
+            'tgl_masuk' => $mutasiMasuk['tgl_masuk'],
+            'asal_sekolah' => $mutasiMasuk['asal_sekolah']
+        ]);
 
         return redirect('/siswa');
     }

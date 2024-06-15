@@ -26,7 +26,9 @@ class CreateSiswaRequest extends FormRequest
             'nisn' => 'string',
             'nama' => 'string',
             'jenis_kelamin' => 'in:L,P',
-            'kelas_id' => 'string'
+            'kelas_id' => 'string',
+            'tgl_masuk' => 'date',
+            'asal_sekolah' => 'string'
         ];
     }
 }

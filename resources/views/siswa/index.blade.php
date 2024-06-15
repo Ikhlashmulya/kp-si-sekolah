@@ -41,6 +41,12 @@
                                     <option value="{{ $k->nama_kelas }}">{{ $k->nama_kelas }}</option>
                                 @endforeach
                             </select>
+                            <div class="mb-3">
+                                <label class="col-form-label">Asal Sekolah:</label>
+                                <input type="text" class="form-control" name="asal_sekolah">
+                            </div>
+                            <label class="col-form-label">Tanggal masuk:</label>
+                            <input type="date" class="form-control datepicker" name="tgl_masuk">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
