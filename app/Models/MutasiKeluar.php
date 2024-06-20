@@ -13,7 +13,7 @@ class MutasiKeluar extends Model
 
     protected $table = 'mutasi_keluar';
 
-    public function siswa(): HasMany {
-        return $this->hasMany(Siswa::class);
+    public function siswa(): BelongsTo {
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
     }
 }

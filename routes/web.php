@@ -28,11 +28,12 @@ Route::middleware([AuthenticationMiddleware::class])->group(function () {
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.add');
     Route::get('/siswa/{siswa}', [SiswaController::class, 'edit'])->name('siswa.edit');
     Route::post('/siswa/{siswa}', [SiswaController::class, 'update'])->name('siswa.update');
-    Route::get('/siswa/{siswa}/delete', [SiswaController::class, 'delete'])->name('siswa.delete');
 
     Route::get('/kelas', [KelasController::class, 'index'])->name('kelas');
     Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.add');
     Route::get('/kelas/delete', [KelasController::class, 'delete']);
 
     Route::get('/mutasi', [MutasiController::class, 'index'])->name('mutasi');
+    Route::get('/siswa/{siswa}/keluar', [MutasiController::class, 'keluar'])->name('siswa.keluar');
+    Route::post('/mutasi/keluar', [MutasiController::class, 'doMutasiKeluar'])->name('mutasi.keluar');
 });

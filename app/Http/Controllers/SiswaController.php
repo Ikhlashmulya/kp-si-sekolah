@@ -20,9 +20,9 @@ class SiswaController extends Controller
         $siswa = null;
 
         if ($filterKelas === 'semua') {
-            $siswa = Siswa::get();
+            $siswa = Siswa::doesntHave('mutasiKeluar')->get();
         } else {
-            $siswa = Siswa::where('kelas_id', '=', $filterKelas)->get();
+            $siswa = Siswa::doesntHave('mutasiKeluar')->where('kelas_id', '=', $filterKelas)->get();
         }
 
         $kelas = Kelas::get();
@@ -56,11 +56,6 @@ class SiswaController extends Controller
         $siswa->kelas_id = $validated['kelas_id'];
         $siswa->save();
 
-        return redirect('/siswa');
-    }
-
-    public function delete(Siswa $siswa): RedirectResponse {
-        $siswa->delete();
         return redirect('/siswa');
     }
 

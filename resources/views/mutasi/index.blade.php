@@ -8,14 +8,11 @@
 
         <form method="GET">
             <select class="form-select" aria-label="Default select example" name="kelas" onchange="this.form.submit()">
-                {{-- <option value="semua" {{ $filterKelas == 'semua' ? 'selected' : '' }}>semua</option>
-                @foreach ($kelas as $k)
-                    <option value="{{ $k->nama_kelas }}" {{ $k->nama_kelas == $filterKelas ? 'selected' : '' }}>
-                        {{ $k->nama_kelas }}</option>
-                @endforeach --}}
-                <option>Juni</option>
-                <option>Juni</option>
-                <option>Juni</option>
+                @foreach ($distinctMonthsAndYears as $m)
+                    <option value="{{ $m['month'] }}">
+                        {{ $m['month'] }}</option>
+
+                @endforeach
             </select>
         </form>
 
@@ -48,8 +45,8 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr>
-                            @foreach ($mutasiMasuk as $mm)
+                        @foreach ($mutasiMasuk as $mm)
+                            <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $mm->siswa->no_induk }}</td>
                                 <td>{{ $mm->siswa->nisn }}</td>
@@ -57,7 +54,7 @@
                                 <td>{{ $mm->siswa->jenis_kelamin }}</td>
                                 <td>{{ $mm->tgl_masuk }}</td>
                                 <td>{{ $mm->asal_sekolah }}</td>
-                            @endforeach
+                        @endforeach
                         </tr>
                     </tbody>
                 </table>
@@ -91,6 +88,17 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        @foreach ($mutasiKeluar as $mk)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $mk->siswa->no_induk }}</td>
+                                <td>{{ $mk->siswa->nisn }}</td>
+                                <td>{{ $mk->siswa->nama }}</td>
+                                <td>{{ $mk->siswa->jenis_kelamin }}</td>
+                                <td>{{ $mk->tgl_keluar }}</td>
+                                <td>{{ $mk->tujuan_sekolah }}</td>
+                        @endforeach
+                        </tr>
                     </tbody>
                 </table>
             </div>

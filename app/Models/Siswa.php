@@ -27,4 +27,8 @@ class Siswa extends Model
     public function mutasiMasuk(): HasMany {
         return $this->hasMany(MutasiMasuk::class, 'siswa_id', 'id');
     }
+
+    public function mutasiKeluar(): HasMany {
+        return $this->hasMany(MutasiKeluar::class, 'siswa_id', 'id');
+    }
 }

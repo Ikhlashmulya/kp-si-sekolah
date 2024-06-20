@@ -41,7 +41,7 @@
                                     <option value="{{ $k->nama_kelas }}">{{ $k->nama_kelas }}</option>
                                 @endforeach
                             </select>
-                            <div class="mb-3">
+                            <div class="mt-3">
                                 <label class="col-form-label">Asal Sekolah:</label>
                                 <input type="text" class="form-control" name="asal_sekolah">
                             </div>
@@ -101,7 +101,7 @@
                                 <td>{{ $s->jenis_kelamin }}</td>
                                 <td>
                                     <a class="btn btn-success" href="{{ route('siswa.edit', $s) }}">Edit</a>
-                                    <a class="btn btn-danger" onclick="return confirm('anda yakin?')" href="{{ route('siswa.delete', $s)}}">Delete</a>
+                                    <a class="btn btn-danger" onclick="return confirm('anda yakin?')" href="{{ route('siswa.keluar', $s)}}">Keluarkan</a>
                                 </td>
                             </tr>
                         @endforeach
