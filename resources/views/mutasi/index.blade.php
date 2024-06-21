@@ -1,4 +1,5 @@
 <x-dashboard-layout>
+    {{-- {{ $test }} --}}
     <div class="container-fluid px-4">
         <h1 class="mt-4">Data Mutasi Siswa</h1>
         <ol class="breadcrumb mb-4">
@@ -7,11 +8,11 @@
         </ol>
 
         <form method="GET">
-            <select class="form-select" aria-label="Default select example" name="kelas" onchange="this.form.submit()">
+            <select class="form-select" aria-label="Default select example" name="date" onchange="this.form.submit()">
+                <option value="semua" {{ $dataForViewFilterMutasi == 'semua' ? 'selected' : '' }}>semua</option>
                 @foreach ($distinctMonthsAndYears as $m)
-                    <option value="{{ $m['month'] }}">
+                    <option value="{{ $m['month'] }}" {{ $m['month'] == $dataForViewFilterMutasi ? 'selected' : '' }}>
                         {{ $m['month'] }}</option>
-
                 @endforeach
             </select>
         </form>
@@ -29,6 +30,7 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Kelas</th>
                             <th>Tanggal Masuk</th>
                             <th>Asal Sekolah</th>
                         </tr>
@@ -40,6 +42,7 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Kelas</th>
                             <th>Tanggal Masuk</th>
                             <th>Asal Sekolah</th>
                         </tr>
@@ -52,6 +55,7 @@
                                 <td>{{ $mm->siswa->nisn }}</td>
                                 <td>{{ $mm->siswa->nama }}</td>
                                 <td>{{ $mm->siswa->jenis_kelamin }}</td>
+                                <td>{{ $mm->siswa->kelas->nama_kelas }}</td>
                                 <td>{{ $mm->tgl_masuk }}</td>
                                 <td>{{ $mm->asal_sekolah }}</td>
                         @endforeach
@@ -72,6 +76,7 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Kelas</th>
                             <th>Tanggal Keluar</th>
                             <th>Tujuan Sekolah</th>
                         </tr>
@@ -83,6 +88,7 @@
                             <th>NISN</th>
                             <th>Nama Lengkap</th>
                             <th>JK</th>
+                            <th>Kelas</th>
                             <th>Tanggal Keluar</th>
                             <th>Tujuan Sekolah</th>
                         </tr>
@@ -95,6 +101,7 @@
                                 <td>{{ $mk->siswa->nisn }}</td>
                                 <td>{{ $mk->siswa->nama }}</td>
                                 <td>{{ $mk->siswa->jenis_kelamin }}</td>
+                                <td>{{ $mk->siswa->kelas->nama_kelas }}</td>
                                 <td>{{ $mk->tgl_keluar }}</td>
                                 <td>{{ $mk->tujuan_sekolah }}</td>
                         @endforeach
