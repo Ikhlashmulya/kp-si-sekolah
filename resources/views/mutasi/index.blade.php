@@ -1,5 +1,4 @@
 <x-dashboard-layout>
-    {{-- {{ $test }} --}}
     <div class="container-fluid px-4">
         <h1 class="mt-4">Data Mutasi Siswa</h1>
         <ol class="breadcrumb mb-4">

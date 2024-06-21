@@ -84,8 +84,4 @@ class MutasiController extends Controller
 
         return redirect('/mutasi');
     }
-
-    // public function filter(Request $request) {
-    //     dd($request->input('date'));
-    // }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Models\Kelas;
-use App\Models\MutasiMasuk;
 use App\Models\Siswa;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
