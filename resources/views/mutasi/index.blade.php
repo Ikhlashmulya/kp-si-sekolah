@@ -122,23 +122,36 @@
             </div>
 
             <div class="card-body">
+                Bulan : {{ $filterForView }}
                 @if ($rekapMutasi)
-                    <table id="datatablesSimple" class="table">
+                    <table id="datatablesSimple" class="table text-center">
                         <thead>
                             <tr>
-                                <th>Kelas</th>
-                                <th>L Awal</th>
-                                <th>P Awal</th>
-                                <th>JM Awal</th>
-                                <th>L Masuk</th>
-                                <th>P Masuk</th>
-                                <th>JM Masuk</th>
-                                <th>L Keluar</th>
-                                <th>P Keluar</th>
-                                <th>JM Keluar</th>
-                                <th>L Akhir</th>
-                                <th>P Akhir</th>
-                                <th>JM Akhir</th>
+                                <th rowspan="3">Kelas</th>
+                                <th colspan="3" rowspan="2">Awal</th>
+                                <th colspan="6">Mutasi</th>
+                                <th colspan="3" rowspan="2">Akhir</th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">Masuk</th>
+                                <th colspan="3">Keluar</th>
+                            </tr>
+                            <tr>
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
                             </tr>
                         </thead>
                         <tbody>
