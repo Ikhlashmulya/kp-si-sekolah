@@ -5,6 +5,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Middleware\AuthenticationMiddleware;
+use App\service\UserService;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthenticationController::class, 'doLogin'])->name('doLogin');
@@ -36,4 +37,8 @@ Route::middleware([AuthenticationMiddleware::class])->group(function () {
     Route::get('/mutasi', [MutasiController::class, 'index'])->name('mutasi');
     Route::get('/siswa/{siswa}/keluar', [MutasiController::class, 'keluar'])->name('siswa.keluar');
     Route::post('/mutasi/keluar', [MutasiController::class, 'doMutasiKeluar'])->name('mutasi.keluar');
+});
+
+Route::get('/test', function () {
+    echo UserService::findByDate();
 });

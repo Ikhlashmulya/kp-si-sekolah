@@ -8,10 +8,10 @@
 
         <form method="GET">
             <select class="form-select" aria-label="Default select example" name="date" onchange="this.form.submit()">
-                <option value="semua" {{ $dataForViewFilterMutasi == 'semua' ? 'selected' : '' }}>semua</option>
-                @foreach ($distinctMonthsAndYears as $m)
-                    <option value="{{ $m['month'] }}" {{ $m['month'] == $dataForViewFilterMutasi ? 'selected' : '' }}>
-                        {{ $m['month'] }}</option>
+                <option value="semua" {{ $filterForView == 'semua' ? 'selected' : '' }}>semua</option>
+                @foreach ($dates as $d)
+                    <option value="{{ $d['month'] }}" {{ $d['month'] == $filterForView ? 'selected' : '' }}>
+                        {{ $d['month'] }}</option>
                 @endforeach
             </select>
         </form>
@@ -32,6 +32,7 @@
                             <th>Kelas</th>
                             <th>Tanggal Masuk</th>
                             <th>Asal Sekolah</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -44,6 +45,7 @@
                             <th>Kelas</th>
                             <th>Tanggal Masuk</th>
                             <th>Asal Sekolah</th>
+                            <th>Keterangan</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -57,6 +59,7 @@
                                 <td>{{ $mm->siswa->kelas->nama_kelas }}</td>
                                 <td>{{ $mm->tgl_masuk }}</td>
                                 <td>{{ $mm->asal_sekolah }}</td>
+                                <td>{{ $mm->keterangan }}</td>
                         @endforeach
                         </tr>
                     </tbody>
@@ -78,6 +81,7 @@
                             <th>Kelas</th>
                             <th>Tanggal Keluar</th>
                             <th>Tujuan Sekolah</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -90,6 +94,7 @@
                             <th>Kelas</th>
                             <th>Tanggal Keluar</th>
                             <th>Tujuan Sekolah</th>
+                            <th>Keterangan</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -103,10 +108,62 @@
                                 <td>{{ $mk->siswa->kelas->nama_kelas }}</td>
                                 <td>{{ $mk->tgl_keluar }}</td>
                                 <td>{{ $mk->tujuan_sekolah }}</td>
+                                <td>{{ $mk->keterangan }}</td>
                         @endforeach
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="card mb-4 mt-5">
+            <div class="card-header">
+                Rekap
+            </div>
+
+            <div class="card-body">
+                @if ($rekapMutasi)
+                    <table id="datatablesSimple" class="table">
+                        <thead>
+                            <tr>
+                                <th>Kelas</th>
+                                <th>L Awal</th>
+                                <th>P Awal</th>
+                                <th>JM Awal</th>
+                                <th>L Masuk</th>
+                                <th>P Masuk</th>
+                                <th>JM Masuk</th>
+                                <th>L Keluar</th>
+                                <th>P Keluar</th>
+                                <th>JM Keluar</th>
+                                <th>L Akhir</th>
+                                <th>P Akhir</th>
+                                <th>JM Akhir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($rekapMutasi as $data)
+                                <tr>
+                                    <td>{{ $data['kelas'] }}</td>
+                                    <td>{{ $data['awalL'] }}</td>
+                                    <td>{{ $data['awalP'] }}</td>
+                                    <td>{{ $data['awalJM'] }}</td>
+                                    <td>{{ $data['masukL'] }}</td>
+                                    <td>{{ $data['masukP'] }}</td>
+                                    <td>{{ $data['masukJM'] }}</td>
+                                    <td>{{ $data['keluarL'] }}</td>
+                                    <td>{{ $data['keluarP'] }}</td>
+                                    <td>{{ $data['keluarJM'] }}</td>
+                                    <td>{{ $data['akhirL'] }}</td>
+                                    <td>{{ $data['akhirP'] }}</td>
+                                    <td>{{ $data['akhirJM'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <b>*Pilih tanggal untuk melihat rekap</b>
+                @endif
             </div>
         </div>
     </div>

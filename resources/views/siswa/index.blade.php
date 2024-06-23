@@ -20,15 +20,15 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="col-form-label">No Induk:</label>
-                                <input type="text" class="form-control" name="no_induk">
+                                <input type="text" class="form-control" name="no_induk" required>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label">NISN:</label>
-                                <input type="text" class="form-control" name="nisn">
+                                <input type="text" class="form-control" name="nisn" required>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label">Nama Lengkap:</label>
-                                <input type="text" class="form-control" name="nama">
+                                <input type="text" class="form-control" name="nama" required>
                             </div>
                             <label class="col-form-label">Jenis Kelamin:</label>
                             <select class="form-select" aria-label="Jenis Kelamin" name="jenis_kelamin">
@@ -43,10 +43,21 @@
                             </select>
                             <div class="mt-3">
                                 <label class="col-form-label">Asal Sekolah:</label>
-                                <input type="text" class="form-control" name="asal_sekolah">
+                                <input type="text" class="form-control" name="asal_sekolah" required>
                             </div>
-                            <label class="col-form-label">Tanggal masuk:</label>
-                            <input type="date" class="form-control datepicker" name="tgl_masuk">
+                            <div class="mt-3">
+                                <label class="col-form-label">Tanggal masuk:</label>
+                                <input type="date" class="form-control datepicker" name="tgl_masuk" required>
+                            </div>
+                            <div class="mt-3">
+                                <label class="col-form-label">Keterangan:</label>
+                                <select class="form-select" aria-label="Jenis Kelamin" name="keterangan">
+                                    <option value="siswa baru">siswa baru</option>
+                                    <option value="siswa pindahan">siswa pindahan</option>
+                                    <option value="keluar">keluar</option>
+                                    <option value="lulus">lulus</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,7 +112,8 @@
                                 <td>{{ $s->jenis_kelamin }}</td>
                                 <td>
                                     <a class="btn btn-success" href="{{ route('siswa.edit', $s) }}">Edit</a>
-                                    <a class="btn btn-danger" onclick="return confirm('anda yakin?')" href="{{ route('siswa.keluar', $s)}}">Keluarkan</a>
+                                    <a class="btn btn-danger" onclick="return confirm('anda yakin?')"
+                                        href="{{ route('siswa.keluar', $s) }}">Keluarkan</a>
                                 </td>
                             </tr>
                         @endforeach

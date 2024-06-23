@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MutasiKeluar;
 use App\Models\MutasiMasuk;
 use App\Models\Siswa;
+use App\Service\MutasiService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,53 +17,19 @@ class MutasiController extends Controller
     public function index(Request $request): View
     {
         $filterMutasi = $request->input('date', 'semua');
-        $dataForViewFilterMutasi = $filterMutasi;
+        $filterForView = $filterMutasi;
 
         if ($filterMutasi !== 'semua') {
             $filterMutasi = Carbon::parse($filterMutasi)->format('m-Y');
         }
 
-        $mutasiMasuk = null;
-        $mutasiKeluar = null;
-
-        if ($filterMutasi === 'semua') {
-            $mutasiMasuk = MutasiMasuk::all()->map(function ($value) {
-                $value->tgl_masuk = Carbon::parse($value->tgl_masuk)->format('d-F-Y');
-                return $value;
-            });
-
-            $mutasiKeluar = MutasiKeluar::all()->map(function ($value) {
-                $value->tgl_keluar = Carbon::parse($value->tgl_keluar)->format('d-F-Y');
-                return $value;
-            });
-        } else {
-            list($month, $year) = explode('-', $filterMutasi);
-
-            $mutasiMasuk = MutasiMasuk::whereRaw('strftime(\'%Y\', tgl_masuk) = ?', [$year])->whereRaw('strftime(\'%m\', tgl_masuk) = ?', [$month])->get()->map(function ($value) {
-                $value->tgl_masuk = Carbon::parse($value->tgl_masuk)->format('d-F-Y');
-                return $value;
-            });
-
-            $mutasiKeluar = MutasiKeluar::whereRaw('strftime(\'%Y\', tgl_keluar) = ?', [$year])->whereRaw('strftime(\'%m\', tgl_keluar) = ?', [$month])->get()->map(function ($value) {
-                $value->tgl_keluar = Carbon::parse($value->tgl_keluar)->format('d-F-Y');
-                return $value;
-            });
-        }
-
-        $dateMutasiMasuk = $postsDates = MutasiMasuk::selectRaw('strftime(\'%Y\', tgl_masuk) as year, strftime(\'%m\', tgl_masuk) as month');
-        $distinctMonthsAndYears = MutasiKeluar::selectRaw('strftime(\'%Y\', tgl_keluar) as year, strftime(\'%m\', tgl_keluar) as month')
-            ->union($dateMutasiMasuk)
-            ->distinct()
-            ->get()
-            ->map(function ($date) {
-                return [
-                    'year' => $date->year,
-                    'month' => Carbon::createFromFormat('!m', $date->month)->translatedFormat('F') . ' ' . $date->year
-                ];
-            });
+        $mutasiMasuk = MutasiService::getMutasiMasuk($filterMutasi);
+        $mutasiKeluar = MutasiService::getMutasiKeluar($filterMutasi);
+        $rekapMutasi = MutasiService::getRekap($filterMutasi); //nullable
+        $dates = MutasiService::getDates();
 
 
-        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'distinctMonthsAndYears', 'dataForViewFilterMutasi'));
+        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi'));
     }
 
     public function keluar(Siswa $siswa): View
@@ -75,12 +42,19 @@ class MutasiController extends Controller
         $siswaId = $request->input('siswa_id');
         $tujuanSekolah = $request->input('tujuan_sekolah');
         $tglKeluar = $request->input('tgl_keluar');
+        $keterangan = $request->input('keterangan');
+
+        $siswa = Siswa::find($siswaId);
 
         DB::table('mutasi_keluar')->insert([
             'siswa_id' => $siswaId,
             'tujuan_sekolah' => $tujuanSekolah,
-            'tgl_keluar' => $tglKeluar
+            'tgl_keluar' => $tglKeluar,
+            'keterangan' => $keterangan,
+            'kelas_id' => $siswa->kelas_id
         ]);
+
+        $siswa->delete();
 
         return redirect('/mutasi');
     }

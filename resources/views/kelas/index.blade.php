@@ -22,7 +22,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Nama Kelas:</label>
-                                <input type="text" class="form-control" name="nama-kelas">
+                                <input type="text" class="form-control" name="nama-kelas" required>
                             </div>
                         </div>
                         <div class="modal-footer">

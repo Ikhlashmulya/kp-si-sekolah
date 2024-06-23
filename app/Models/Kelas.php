@@ -17,4 +17,12 @@ class Kelas extends Model
     public function siswa(): HasMany {
         return $this->hasMany(Siswa::class, 'kelas_id', 'nama_kelas');
     }
+
+    public function mutasiMasuk(): HasMany {
+        return $this->hasMany(MutasiMasuk::class, 'kelas_id', 'nama_kelas');
+    }
+
+    public function mutasiKeluar(): HasMany {
+        return $this->hasMany(MutasiKeluar::class, 'kelas_id', 'nama_kelas');
+    }
 }

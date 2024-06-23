@@ -10,11 +10,11 @@
             @csrf
             <div class="mb-3">
                 <label class="form-label">No Induk</label>
-                <input type="text" class="form-control" value="{{ $siswa->no_induk }}" name="no_induk">
+                <input type="text" class="form-control" value="{{ $siswa->no_induk }}" name="no_induk" required>
                 <label class="form-label">NISN</label>
-                <input type="text" class="form-control" value="{{ $siswa->nisn }}" name="nisn">
+                <input type="text" class="form-control" value="{{ $siswa->nisn }}" name="nisn" required>
                 <label class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" value="{{ $siswa->nama }}" name="nama">
+                <input type="text" class="form-control" value="{{ $siswa->nama }}" name="nama" required>
                 <label class="form-label">Jenis Kelamin</label>
                 <select class="form-select" name="jenis_kelamin">
                     <option value="L" {{ $siswa->jenis_kelamin == 'L' ? 'selected' : '' }}>L</option>

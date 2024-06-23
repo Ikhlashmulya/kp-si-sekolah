@@ -28,7 +28,8 @@ class CreateSiswaRequest extends FormRequest
             'jenis_kelamin' => 'in:L,P',
             'kelas_id' => 'string',
             'tgl_masuk' => 'date',
-            'asal_sekolah' => 'string'
+            'asal_sekolah' => 'string',
+            'keterangan' => 'in:siswa baru,siswa pindahan,lulus,keluar'
         ];
     }
 }

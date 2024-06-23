@@ -16,6 +16,10 @@ class MutasiMasuk extends Model
     protected $guarded = [];
 
     public function siswa(): BelongsTo {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Siswa::class)->withTrashed();
+    }
+
+    public function kelas(): BelongsTo {
+        return $this->belongsTo(Kelas::class);
     }
 }

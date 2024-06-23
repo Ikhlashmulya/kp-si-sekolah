@@ -14,6 +14,10 @@ class MutasiKeluar extends Model
     protected $table = 'mutasi_keluar';
 
     public function siswa(): BelongsTo {
-        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id')->withTrashed();
+    }
+
+    public function kelas(): BelongsTo {
+        return $this->belongsTo(Kelas::class);
     }
 }

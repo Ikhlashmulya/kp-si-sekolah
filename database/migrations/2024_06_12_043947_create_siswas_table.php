@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jenis_kelamin');
             $table->foreignIdFor(Kelas::class);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

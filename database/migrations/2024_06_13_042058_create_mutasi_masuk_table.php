@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,8 +16,10 @@ return new class extends Migration
         Schema::create('mutasi_masuk', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Siswa::class);
+            $table->foreignIdFor(Kelas::class);
             $table->date('tgl_masuk');
             $table->string('asal_sekolah');
+            $table->string('keterangan');
         });
     }
 
