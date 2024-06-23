@@ -18,7 +18,8 @@ class Siswa extends Model
         'no_induk',
         'nisn',
         'nama',
-        'jenis_kelamin'
+        'jenis_kelamin',
+        'kelas_id'
     ];
 
     public function kelas(): BelongsTo {

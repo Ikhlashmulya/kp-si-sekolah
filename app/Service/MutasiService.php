@@ -7,6 +7,7 @@ use App\Models\MutasiKeluar;
 use App\Models\MutasiMasuk;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class MutasiService
 {
@@ -72,31 +73,32 @@ class MutasiService
             return null;
         }
 
-        $date = Carbon::create($year, $month, 1)->endOfMonth();
+        $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth();
+        $startOfMonth = Carbon::create($year, $month, 1)->startOfMonth();
         $classes = Kelas::all();
         $report = [];
 
         foreach ($classes as $class) {
 
-            $awalL = $class->siswa()->where('jenis_kelamin', 'L')->count();
-            $awalP = $class->siswa()->where('jenis_kelamin', 'P')->count();
+            $awalL = $class->siswa()->where('jenis_kelamin', 'L')->whereDate('created_at', '<', $startOfMonth)->count();
+            $awalP = $class->siswa()->where('jenis_kelamin', 'P')->whereDate('created_at', '<', $startOfMonth)->count();
             $awalJM = $awalL + $awalP;
 
-            $masukL = $class->mutasiMasuk()->where('tgl_masuk', '<=', $date)->whereHas('siswa', function ($query) {
+            $masukL = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $masukP = $class->mutasiMasuk()->where('tgl_masuk', '<=', $date)->whereHas('siswa', function ($query) {
+            $masukP = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 
             $masukJM = $masukL + $masukP;
 
-            $keluarL = $class->mutasiKeluar()->where('tgl_keluar', '<=', $date)->whereHas('siswa', function ($query) {
+            $keluarL = $class->mutasiKeluar()->where('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $keluarP = $class->mutasiKeluar()->where('tgl_keluar', '<=', $date)->whereHas('siswa', function ($query) {
+            $keluarP = $class->mutasiKeluar()->where('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 

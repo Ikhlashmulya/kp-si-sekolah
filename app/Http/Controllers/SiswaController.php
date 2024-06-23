@@ -32,16 +32,16 @@ class SiswaController extends Controller
 
     public function store(CreateSiswaRequest $request): RedirectResponse
     {
-        $siswa = $request->only(['no_induk', 'nisn', 'nama', 'jenis_kelamin', 'kelas_id']);
+        $siswaRequest = $request->only(['no_induk', 'nisn', 'nama', 'jenis_kelamin', 'kelas_id']);
         $mutasiMasuk = $request->only(['tgl_masuk', 'asal_sekolah', 'keterangan']);
-
-        $lastId = DB::table('siswa')->insertGetId($siswa);
+        
+        $siswa = Siswa::create($siswaRequest);
         DB::table('mutasi_masuk')->insert([
-            'siswa_id' => $lastId,
+            'siswa_id' => $siswa->id,
             'tgl_masuk' => $mutasiMasuk['tgl_masuk'],
             'asal_sekolah' => $mutasiMasuk['asal_sekolah'],
             'keterangan' => $mutasiMasuk['keterangan'],
-            'kelas_id' => $siswa['kelas_id']
+            'kelas_id' => $siswaRequest['kelas_id']
         ]);
 
         return redirect('/siswa');
