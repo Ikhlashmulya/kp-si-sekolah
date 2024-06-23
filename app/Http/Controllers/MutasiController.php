@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RekapExport;
 use App\Models\MutasiKeluar;
 use App\Models\MutasiMasuk;
 use App\Models\Siswa;
@@ -11,25 +12,26 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MutasiController extends Controller
 {
     public function index(Request $request): View
     {
-        $filterMutasi = $request->input('date', 'semua');
-        $filterForView = $filterMutasi;
+        $date = $request->input('date', 'semua');
+        $filterForView = $date;
 
-        if ($filterMutasi !== 'semua') {
-            $filterMutasi = Carbon::parse($filterMutasi)->format('m-Y');
+        if ($date !== 'semua') {
+            $date = Carbon::parse($date)->format('m-Y');
         }
 
-        $mutasiMasuk = MutasiService::getMutasiMasuk($filterMutasi);
-        $mutasiKeluar = MutasiService::getMutasiKeluar($filterMutasi);
-        $rekapMutasi = MutasiService::getRekap($filterMutasi); //nullable
+        $mutasiMasuk = MutasiService::getMutasiMasuk($date);
+        $mutasiKeluar = MutasiService::getMutasiKeluar($date);
+        $rekapMutasi = MutasiService::getRekap($date); //nullable
         $dates = MutasiService::getDates();
 
 
-        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi'));
+        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date'));
     }
 
     public function keluar(Siswa $siswa): View
@@ -57,5 +59,15 @@ class MutasiController extends Controller
         $siswa->delete();
 
         return redirect('/mutasi');
+    }
+
+    public function export(string $date)
+    {
+        $rekapMutasi = MutasiService::getRekap($date);
+        $mutasiMasuk = MutasiService::getMutasiMasuk($date);
+        $mutasiKeluar = MutasiService::getMutasiKeluar($date);
+        list($month, $year) = explode('-', $date);
+        $date = Carbon::create($year, $month)->format('F-Y');
+        return Excel::download(new RekapExport($mutasiMasuk, $mutasiKeluar, $rekapMutasi, $date), "rekap-$date.xlsx");
     }
 }

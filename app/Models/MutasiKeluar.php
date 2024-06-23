@@ -11,6 +11,8 @@ class MutasiKeluar extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'mutasi_keluar';
 
     public function siswa(): BelongsTo {

@@ -116,14 +116,17 @@
             </div>
         </div>
 
-        <div class="card mb-4 mt-5">
+        <div class="card mb-4 mt-2">
             <div class="card-header">
                 Rekap
             </div>
 
             <div class="card-body">
-                Bulan : {{ $filterForView }}
                 @if ($rekapMutasi)
+                    <div class="d-flex justify-content-between">
+                        Bulan : {{ $filterForView }}
+                        <a class="btn btn-primary" href="/mutasi/export/{{ $date }}">Export</a>
+                    </div>
                     <table id="datatablesSimple" class="table text-center">
                         <thead>
                             <tr>

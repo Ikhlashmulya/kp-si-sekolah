@@ -11,6 +11,8 @@ class MutasiMasuk extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'mutasi_masuk';
 
     protected $guarded = [];

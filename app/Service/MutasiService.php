@@ -84,21 +84,29 @@ class MutasiService
             $awalP = $class->siswa()->where('jenis_kelamin', 'P')->whereDate('created_at', '<', $startOfMonth)->count();
             $awalJM = $awalL + $awalP;
 
-            $masukL = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            // $masukL = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            //     $query->where('jenis_kelamin', 'L');
+            // })->count();
+
+            // $masukP = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            //     $query->where('jenis_kelamin', 'P');
+            // })->count();
+
+            $masukL = $class->mutasiMasuk()->whereBetween('tgl_masuk', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $masukP = $class->mutasiMasuk()->where('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            $masukP = $class->mutasiMasuk()->whereBetween('tgl_masuk', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 
             $masukJM = $masukL + $masukP;
 
-            $keluarL = $class->mutasiKeluar()->where('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            $keluarL = $class->mutasiKeluar()->whereBetween('tgl_keluar', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $keluarP = $class->mutasiKeluar()->where('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
+            $keluarP = $class->mutasiKeluar()->whereBetween('tgl_keluar', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 
