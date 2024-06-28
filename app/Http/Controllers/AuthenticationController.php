@@ -36,6 +36,6 @@ class AuthenticationController extends Controller
 
         User::create($user);
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Registrasi Suskses silahkan login');
     }
 }

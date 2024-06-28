@@ -29,7 +29,7 @@ class KelasController extends Controller
     {
         $nama = $request->input('nama-kelas');
 
-        DB::table('kelas')->insert(['nama_kelas' => $nama]);
+        DB::table('kelas')->insertOrIgnore(['nama_kelas' => $nama]);
 
         return redirect('/kelas');
     }

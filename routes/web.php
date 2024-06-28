@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\SiswaController;
@@ -21,9 +22,7 @@ Route::get('/register', function () {
 });
 
 Route::middleware([AuthenticationMiddleware::class])->group(function () {
-    Route::get('/', function () {
-        return view('index');
-    });
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa');
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.add');
