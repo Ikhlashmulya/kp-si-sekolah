@@ -28,10 +28,11 @@ class MutasiController extends Controller
         $mutasiMasuk = MutasiService::getMutasiMasuk($date);
         $mutasiKeluar = MutasiService::getMutasiKeluar($date);
         $rekapMutasi = MutasiService::getRekap($date); //nullable
+        $sumRekap = MutasiService::sumRekapBulanan($rekapMutasi);
         $dates = MutasiService::getDates();
 
 
-        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date'));
+        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date', 'sumRekap'));
     }
 
     public function keluar(Siswa $siswa): View

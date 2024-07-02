@@ -122,7 +122,7 @@
             </div>
 
             <div class="card-body">
-                @if ($rekapMutasi)
+                @if ($rekapMutasi && $sumRekap)
                     <div class="d-flex justify-content-between">
                         Bulan : {{ $filterForView }}
                         <a class="btn btn-primary" href="/mutasi/export/{{ $date }}">Export</a>
@@ -176,6 +176,23 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{ $sumRekap['jumlahAwalL'] }}</td>
+                                <td>{{ $sumRekap['jumlahAwalP'] }}</td>
+                                <td>{{ $sumRekap['jumlahAwalJM'] }}</td>
+                                <td>{{ $sumRekap['jumlahMasukL'] }}</td>
+                                <td>{{ $sumRekap['jumlahMasukP'] }}</td>
+                                <td>{{ $sumRekap['jumlahMasukJM'] }}</td>
+                                <td>{{ $sumRekap['jumlahKeluarL'] }}</td>
+                                <td>{{ $sumRekap['jumlahKeluarP'] }}</td>
+                                <td>{{ $sumRekap['jumlahKeluarJM'] }}</td>
+                                <td>{{ $sumRekap['jumlahAkhirL'] }}</td>
+                                <td>{{ $sumRekap['jumlahAkhirP'] }}</td>
+                                <td>{{ $sumRekap['jumlahAkhirJM'] }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 @else
                     <b>*Pilih tanggal untuk melihat rekap</b>
