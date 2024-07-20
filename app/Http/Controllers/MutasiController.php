@@ -27,7 +27,7 @@ class MutasiController extends Controller
 
         $mutasiMasuk = MutasiService::getMutasiMasuk($date);
         $mutasiKeluar = MutasiService::getMutasiKeluar($date);
-        $rekapMutasi = MutasiService::getRekap($date); //nullable
+        $rekapMutasi = MutasiService::getRekapBulanan($date); //nullable
         $sumRekap = MutasiService::sumRekapBulanan($rekapMutasi);
         $dates = MutasiService::getDates();
 
@@ -64,7 +64,7 @@ class MutasiController extends Controller
 
     public function export(string $date)
     {
-        $rekapMutasi = MutasiService::getRekap($date);
+        $rekapMutasi = MutasiService::getRekapBulanan($date);
         $mutasiMasuk = MutasiService::getMutasiMasuk($date);
         $mutasiKeluar = MutasiService::getMutasiKeluar($date);
         list($month, $year) = explode('-', $date);

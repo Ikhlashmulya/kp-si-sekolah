@@ -68,7 +68,7 @@ class MutasiService
             });
     }
 
-    public static function getRekap(string $filter): array|null
+    public static function getRekapBulanan(string $filter): array|null
     {
         try {
             list($month, $year) = explode('-', $filter);
@@ -87,21 +87,21 @@ class MutasiService
             $awalP = $class->siswa()->where('jenis_kelamin', 'P')->whereDate('created_at', '<', $startOfMonth)->count();
             $awalJM = $awalL + $awalP;
 
-            $masukL = $class->mutasiMasuk()->whereBetween('tgl_masuk', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
+            $masukL = $class->mutasiMasuk()->whereDate('tgl_masuk', '>=', $startOfMonth)->whereDate('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $masukP = $class->mutasiMasuk()->whereBetween('tgl_masuk', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
+            $masukP = $class->mutasiMasuk()->whereDate('tgl_masuk', '>=', $startOfMonth)->whereDate('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 
             $masukJM = $masukL + $masukP;
 
-            $keluarL = $class->mutasiKeluar()->whereBetween('tgl_keluar', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
+            $keluarL = $class->mutasiKeluar()->whereDate('tgl_keluar', '>=', $startOfMonth)->whereDate('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
             })->count();
 
-            $keluarP = $class->mutasiKeluar()->whereBetween('tgl_keluar', [$startOfMonth, $endOfMonth])->whereHas('siswa', function ($query) {
+            $keluarP = $class->mutasiKeluar()->whereDate('tgl_keluar', '>=', $startOfMonth)->whereDate('tgl_keluar', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'P');
             })->count();
 
@@ -131,7 +131,8 @@ class MutasiService
         return $report;
     }
 
-    public static function sumRekapBulanan(array|null $report): array|null {
+    public static function sumRekapBulanan(array|null $report): array|null
+    {
         if (!$report) {
             return null;
         }
@@ -167,5 +168,24 @@ class MutasiService
         }
 
         return $sum;
+    }
+
+    public static function getRekapTahunan(int $year)
+    {
+        $startDate = Carbon::create($year, 7, 1);
+        $endDate = Carbon::create($year + 1, 6, 30);
+
+        $rekapTahunan = collect();
+        $current = $startDate->copy();
+
+        while ($current->lessThanOrEqualTo($endDate)) {
+            $format = $current->month . "-" . $current->year;
+
+            $rekapTahunan[$current->month] = self::getRekapBulanan($format);
+
+            $current->addMonth();
+        }
+
+        return $rekapTahunan;
     }
 }
