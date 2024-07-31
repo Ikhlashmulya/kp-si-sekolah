@@ -37,7 +37,7 @@ Route::middleware([AuthenticationMiddleware::class])->group(function () {
     Route::get('/mutasi', [MutasiController::class, 'index'])->name('mutasi');
     Route::get('/siswa/{siswa}/keluar', [MutasiController::class, 'keluar'])->name('siswa.keluar');
     Route::post('/mutasi/keluar', [MutasiController::class, 'doMutasiKeluar'])->name('mutasi.keluar');
-    Route::get('/mutasi/export/{date}', [MutasiController::class, 'export']);
 
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap');
+    Route::get('/rekap/bulanan/export/{date}', [RekapController::class, 'exportRekapBulanan']);
 });

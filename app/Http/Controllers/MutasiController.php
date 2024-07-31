@@ -20,14 +20,14 @@ class MutasiController extends Controller
     public function index(Request $request): View
     {
         $date = $request->input('date', 'semua');
-        $filterForView = $date;
+        $selected = $date;
 
         $mutasiMasuk = null;
         $mutasiKeluar = null;
 
         if ($date !== 'semua') {
             $date = Carbon::parse($date)->format('m-Y');
-            
+
             list($month, $year) = explode('-', $date);
 
             $requestGetMutasiByDate = new GetMutasiByDateDto($month, $year);
@@ -38,13 +38,10 @@ class MutasiController extends Controller
             $mutasiKeluar = MutasiService::getAllMutasiKeluar();
         }
 
-        $rekapMutasi = MutasiService::getRekapBulanan($date); //nullable
-        $sumRekap = MutasiService::sumRekapBulanan($rekapMutasi);
         $dates = MutasiService::getDates();
-        $rekapTahunan = MutasiService::getRekapTahunan(2024);
 
 
-        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date', 'sumRekap', 'rekapTahunan'));
+        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'selected', 'date'));
     }
 
     public function keluar(Siswa $siswa): View

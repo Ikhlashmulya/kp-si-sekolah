@@ -18,7 +18,7 @@ class RekapExport implements FromView
 
     public function view(): View
     {
-        return view('mutasi.rekap', [
+        return view('rekap.export', [
             'rekapMutasi' => $this->rekap,
             'date' => $this->date,
             'mutasiMasuk' => $this->mutasiMasuk,
