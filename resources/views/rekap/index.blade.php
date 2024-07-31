@@ -136,23 +136,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rekapTahunan as $key => $value)
-                        @foreach ($value as $v)
+                    @foreach ($rekapTahunan as $month => $records)
+                        @foreach ($records as $index => $record)
                             <tr>
-                                <td>{{ $key }}</td>
-                                <td>{{ $v['kelas'] }}</td>
-                                <td>{{ $v['awalL'] }}</td>
-                                <td>{{ $v['awalP'] }}</td>
-                                <td>{{ $v['awalJM'] }}</td>
-                                <td>{{ $v['masukL'] }}</td>
-                                <td>{{ $v['masukP'] }}</td>
-                                <td>{{ $v['masukJM'] }}</td>
-                                <td>{{ $v['keluarL'] }}</td>
-                                <td>{{ $v['keluarP'] }}</td>
-                                <td>{{ $v['keluarJM'] }}</td>
-                                <td>{{ $v['akhirL'] }}</td>
-                                <td>{{ $v['akhirP'] }}</td>
-                                <td>{{ $v['akhirJM'] }}</td>
+                                @if ($index == 0)
+                                    <td rowspan="{{ count($records) }}"> {{ $month }}</td>
+                                @endif
+                                <td>{{ $record['kelas'] }}</td>
+                                <td>{{ $record['awalL'] }}</td>
+                                <td>{{ $record['awalP'] }}</td>
+                                <td>{{ $record['awalJM'] }}</td>
+                                <td>{{ $record['masukL'] }}</td>
+                                <td>{{ $record['masukP'] }}</td>
+                                <td>{{ $record['masukJM'] }}</td>
+                                <td>{{ $record['keluarL'] }}</td>
+                                <td>{{ $record['keluarP'] }}</td>
+                                <td>{{ $record['keluarJM'] }}</td>
+                                <td>{{ $record['akhirL'] }}</td>
+                                <td>{{ $record['akhirP'] }}</td>
+                                <td>{{ $record['akhirJM'] }}</td>
                             </tr>
                         @endforeach
                     @endforeach
