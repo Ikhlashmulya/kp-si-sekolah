@@ -207,6 +207,7 @@
             <table id="datatablesSimple" class="table text-center">
                 <thead>
                     <tr>
+                        <th rowspan="3">Bulan</th>
                         <th rowspan="3">Kelas</th>
                         <th colspan="3" rowspan="2">Awal</th>
                         <th colspan="6">Mutasi</th>
@@ -235,21 +236,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>X1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
+                    @foreach ($rekapTahunan as $key => $value)
+                        @foreach ($value as $v)
+                            <tr>
+                                <td>{{ $key }}</td>
+                                <td>{{ $v['kelas'] }}</td>
+                                <td>{{ $v['awalL'] }}</td>
+                                <td>{{ $v['awalP'] }}</td>
+                                <td>{{ $v['awalJM'] }}</td>
+                                <td>{{ $v['masukL'] }}</td>
+                                <td>{{ $v['masukP'] }}</td>
+                                <td>{{ $v['masukJM'] }}</td>
+                                <td>{{ $v['keluarL'] }}</td>
+                                <td>{{ $v['keluarP'] }}</td>
+                                <td>{{ $v['keluarJM'] }}</td>
+                                <td>{{ $v['akhirL'] }}</td>
+                                <td>{{ $v['akhirP'] }}</td>
+                                <td>{{ $v['akhirJM'] }}</td>
+                            </tr>
+                        @endforeach
+                    @endforeach
                 </tbody>
             </table>
         </div>

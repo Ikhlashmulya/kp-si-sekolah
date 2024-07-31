@@ -37,6 +37,8 @@ class SiswaController extends Controller
         $mutasiMasuk = $request->only(['tgl_masuk', 'asal_sekolah', 'keterangan']);
 
         $siswa = Siswa::create($siswaRequest);
+        $siswa->created_at = $mutasiMasuk['tgl_masuk'];
+        $siswa->save();
         DB::table('mutasi_masuk')->insert([
             'siswa_id' => $siswa->id,
             'tgl_masuk' => $mutasiMasuk['tgl_masuk'],

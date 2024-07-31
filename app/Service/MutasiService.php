@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Dto\GetMutasiByDateDto;
 use App\Models\Kelas;
 use App\Models\MutasiKeluar;
 use App\Models\MutasiMasuk;
@@ -17,6 +18,38 @@ class MutasiService
     public function __construct()
     {
         //
+    }
+
+    public static function getAllMutasiMasuk(): object
+    {
+        return MutasiMasuk::all()->map(function ($value) {
+            $value->tgl_masuk = Carbon::parse($value->tgl_masuk)->format('d-F-Y');
+            return $value;
+        });
+    }
+
+    public static function getMutasiMasukByDate(GetMutasiByDateDto $requestGetMutasiByDate): object
+    {
+        return MutasiMasuk::whereRaw('strftime(\'%Y\', tgl_masuk) = ?', [$requestGetMutasiByDate->year])->whereRaw('strftime(\'%m\', tgl_masuk) = ?', [$requestGetMutasiByDate->month])->get()->map(function ($value) {
+            $value->tgl_masuk = Carbon::parse($value->tgl_masuk)->format('d-F-Y');
+            return $value;
+        });
+    }
+
+    public static function getAllMutasiKeluar(): object
+    {
+        return MutasiKeluar::all()->map(function ($value) {
+            $value->tgl_keluar = Carbon::parse($value->tgl_keluar)->format('d-F-Y');
+            return $value;
+        });
+    }
+
+    public static function getMutasiKeluarByDate(GetMutasiByDateDto $requestGetMutasiByDate): object
+    {
+        return MutasiKeluar::whereRaw('strftime(\'%Y\', tgl_keluar) = ?', [$requestGetMutasiByDate->year])->whereRaw('strftime(\'%m\', tgl_keluar) = ?', [$requestGetMutasiByDate->month])->get()->map(function ($value) {
+            $value->tgl_keluar = Carbon::parse($value->tgl_keluar)->format('d-F-Y');
+            return $value;
+        });
     }
 
     public static function getMutasiMasuk(string $filter = "semua"): object
@@ -181,7 +214,7 @@ class MutasiService
         while ($current->lessThanOrEqualTo($endDate)) {
             $format = $current->month . "-" . $current->year;
 
-            $rekapTahunan[$current->month] = self::getRekapBulanan($format);
+            $rekapTahunan[Carbon::createFromFormat('!m', $current->month)->format('F') . "-" . $current->year] = self::getRekapBulanan($format);
 
             $current->addMonth();
         }

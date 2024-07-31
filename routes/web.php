@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Middleware\AuthenticationMiddleware;
 use App\service\UserService;
@@ -37,4 +38,6 @@ Route::middleware([AuthenticationMiddleware::class])->group(function () {
     Route::get('/siswa/{siswa}/keluar', [MutasiController::class, 'keluar'])->name('siswa.keluar');
     Route::post('/mutasi/keluar', [MutasiController::class, 'doMutasiKeluar'])->name('mutasi.keluar');
     Route::get('/mutasi/export/{date}', [MutasiController::class, 'export']);
+
+    Route::get('/rekap', [RekapController::class, 'index'])->name('rekap');
 });

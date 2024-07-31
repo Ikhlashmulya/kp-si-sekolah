@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dto\GetMutasiByDateDto;
 use App\Exports\RekapExport;
 use App\Models\MutasiKeluar;
 use App\Models\MutasiMasuk;
@@ -21,18 +22,29 @@ class MutasiController extends Controller
         $date = $request->input('date', 'semua');
         $filterForView = $date;
 
+        $mutasiMasuk = null;
+        $mutasiKeluar = null;
+
         if ($date !== 'semua') {
             $date = Carbon::parse($date)->format('m-Y');
+            
+            list($month, $year) = explode('-', $date);
+
+            $requestGetMutasiByDate = new GetMutasiByDateDto($month, $year);
+            $mutasiMasuk = MutasiService::getMutasiMasukByDate($requestGetMutasiByDate);
+            $mutasiKeluar = MutasiService::getMutasiKeluarByDate($requestGetMutasiByDate);
+        } else {
+            $mutasiMasuk = MutasiService::getAllMutasiMasuk();
+            $mutasiKeluar = MutasiService::getAllMutasiKeluar();
         }
 
-        $mutasiMasuk = MutasiService::getMutasiMasuk($date);
-        $mutasiKeluar = MutasiService::getMutasiKeluar($date);
         $rekapMutasi = MutasiService::getRekapBulanan($date); //nullable
         $sumRekap = MutasiService::sumRekapBulanan($rekapMutasi);
         $dates = MutasiService::getDates();
+        $rekapTahunan = MutasiService::getRekapTahunan(2024);
 
 
-        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date', 'sumRekap'));
+        return view('mutasi.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'filterForView', 'rekapMutasi', 'date', 'sumRekap', 'rekapTahunan'));
     }
 
     public function keluar(Siswa $siswa): View

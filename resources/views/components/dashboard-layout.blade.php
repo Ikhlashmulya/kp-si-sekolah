@@ -71,6 +71,12 @@
                             Mutasi Siswa
                         </a>
                     </div>
+                    <div class="nav">
+                        <a class="nav-link {{ request()->routeIs('rekap') ? 'active' : '' }}"
+                            href="{{ route('rekap') }}">
+                            Rekap Data
+                        </a>
+                    </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
