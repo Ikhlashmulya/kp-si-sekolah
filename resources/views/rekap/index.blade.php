@@ -8,9 +8,9 @@
 
         <form method="GET">
             <select class="form-select" aria-label="Default select example" name="date" onchange="this.form.submit()">
-                <option value="semua" {{ $filterForView == 'semua' ? 'selected' : '' }}>semua</option>
+                <option value="noselected" {{ $selected == '' ? 'selected' : '' }}>---</option>
                 @foreach ($dates as $d)
-                    <option value="{{ $d['month'] }}" {{ $d['month'] == $filterForView ? 'selected' : '' }}>
+                    <option value="{{ $d['month'] }}" {{ $d['month'] == $selected ? 'selected' : '' }}>
                         {{ $d['month'] }}</option>
                 @endforeach
             </select>
@@ -24,7 +24,7 @@
             <div class="card-body">
                 @if ($rekapMutasi && $sumRekap)
                     <div class="d-flex justify-content-between">
-                        Bulan : {{ $filterForView }}
+                        Bulan : {{ $selected }}
                         <a class="btn btn-primary" href="/rekap/bulanan/export/{{ $date }}">Export</a>
                     </div>
                     <table id="datatablesSimple" class="table text-center">

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Dto\GetMutasiByDateDto;
-use App\Exports\RekapExport;
-use App\Models\MutasiKeluar;
-use App\Models\MutasiMasuk;
 use App\Models\Siswa;
 use App\Service\MutasiService;
 use Carbon\Carbon;
@@ -13,7 +10,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Maatwebsite\Excel\Facades\Excel;
 
 class MutasiController extends Controller
 {
@@ -69,15 +65,5 @@ class MutasiController extends Controller
         $siswa->delete();
 
         return redirect('/mutasi');
-    }
-
-    public function export(string $date)
-    {
-        $rekapMutasi = MutasiService::getRekapBulanan($date);
-        $mutasiMasuk = MutasiService::getMutasiMasuk($date);
-        $mutasiKeluar = MutasiService::getMutasiKeluar($date);
-        list($month, $year) = explode('-', $date);
-        $date = Carbon::create($year, $month)->format('F-Y');
-        return Excel::download(new RekapExport($mutasiMasuk, $mutasiKeluar, $rekapMutasi, $date), "rekap-$date.xlsx");
     }
 }
