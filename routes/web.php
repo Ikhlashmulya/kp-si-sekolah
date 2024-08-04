@@ -40,4 +40,5 @@ Route::middleware([AuthenticationMiddleware::class])->group(function () {
 
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap');
     Route::get('/rekap/bulanan/export/{date}', [RekapController::class, 'exportRekapBulanan']);
+    Route::get('/rekap/tahunan/export/{year}', [RekapController::class, 'exportRekapTahunan']);
 });

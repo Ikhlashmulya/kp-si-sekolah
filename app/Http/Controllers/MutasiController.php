@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dto\GetMutasiByDateDto;
+use App\Dto\GetByDateDto;
 use App\Models\Siswa;
 use App\Service\MutasiService;
 use Carbon\Carbon;
@@ -26,9 +26,9 @@ class MutasiController extends Controller
 
             list($month, $year) = explode('-', $date);
 
-            $requestGetMutasiByDate = new GetMutasiByDateDto($month, $year);
-            $mutasiMasuk = MutasiService::getMutasiMasukByDate($requestGetMutasiByDate);
-            $mutasiKeluar = MutasiService::getMutasiKeluarByDate($requestGetMutasiByDate);
+            $requestGetByDate = new GetByDateDto($month, $year);
+            $mutasiMasuk = MutasiService::getMutasiMasukByDate($requestGetByDate);
+            $mutasiKeluar = MutasiService::getMutasiKeluarByDate($requestGetByDate);
         } else {
             $mutasiMasuk = MutasiService::getAllMutasiMasuk();
             $mutasiKeluar = MutasiService::getAllMutasiKeluar();

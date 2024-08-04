@@ -8,9 +8,9 @@
 
         <form method="GET">
             <select class="form-select" aria-label="Default select example" name="date" onchange="this.form.submit()">
-                <option value="noselected" {{ $selected == '' ? 'selected' : '' }}>---</option>
+                <option value="noselected" {{ $selectedDate == '' ? 'selected' : '' }}>---</option>
                 @foreach ($dates as $d)
-                    <option value="{{ $d['month'] }}" {{ $d['month'] == $selected ? 'selected' : '' }}>
+                    <option value="{{ $d['month'] }}" {{ $d['month'] == $selectedDate ? 'selected' : '' }}>
                         {{ $d['month'] }}</option>
                 @endforeach
             </select>
@@ -24,7 +24,7 @@
             <div class="card-body">
                 @if ($rekapMutasi && $sumRekap)
                     <div class="d-flex justify-content-between">
-                        Bulan : {{ $selected }}
+                        Bulan : {{ $selectedDate }}
                         <a class="btn btn-primary" href="/rekap/bulanan/export/{{ $date }}">Export</a>
                     </div>
                     <table id="datatablesSimple" class="table text-center">
@@ -100,66 +100,88 @@
             </div>
         </div>
 
+        <form method="GET">
+            <select class="form-select" aria-label="Default select example" name="year"
+                onchange="this.form.submit()">
+                <option value="noselected" {{ $selectedYear == '' ? 'selected' : '' }}>---</option>
+                @foreach ($years as $year)
+                    <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>
+                        {{ $year }} - {{ $year + 1 }}</option>
+                @endforeach
+            </select>
+        </form>
+
         <div class="card mb-4 mt-2">
             <div class="card-header">
                 Rekap Tahunan
             </div>
-            <table id="datatablesSimple" class="table text-center">
-                <thead>
-                    <tr>
-                        <th rowspan="3">Bulan</th>
-                        <th rowspan="3">Kelas</th>
-                        <th colspan="3" rowspan="2">Awal</th>
-                        <th colspan="6">Mutasi</th>
-                        <th colspan="3" rowspan="2">Akhir</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">Masuk</th>
-                        <th colspan="3">Keluar</th>
-                    </tr>
-                    <tr>
-                        <th>L</th>
-                        <th>P</th>
-                        <th>JML</th>
 
-                        <th>L</th>
-                        <th>P</th>
-                        <th>JML</th>
-
-                        <th>L</th>
-                        <th>P</th>
-                        <th>JML</th>
-
-                        <th>L</th>
-                        <th>P</th>
-                        <th>JML</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($rekapTahunan as $month => $records)
-                        @foreach ($records as $index => $record)
+            <div class="card-body">
+                @if ($rekapTahunan)
+                    <div class="d-flex justify-content-between">
+                        Tahun : {{ $selectedYear }}
+                        <a class="btn btn-primary" href="/rekap/tahunan/export/{{ $selectedYear }}">Export</a>
+                    </div>
+                    <table id="datatablesSimple" class="table text-center">
+                        <thead>
                             <tr>
-                                @if ($index == 0)
-                                    <td rowspan="{{ count($records) }}"> {{ $month }}</td>
-                                @endif
-                                <td>{{ $record['kelas'] }}</td>
-                                <td>{{ $record['awalL'] }}</td>
-                                <td>{{ $record['awalP'] }}</td>
-                                <td>{{ $record['awalJM'] }}</td>
-                                <td>{{ $record['masukL'] }}</td>
-                                <td>{{ $record['masukP'] }}</td>
-                                <td>{{ $record['masukJM'] }}</td>
-                                <td>{{ $record['keluarL'] }}</td>
-                                <td>{{ $record['keluarP'] }}</td>
-                                <td>{{ $record['keluarJM'] }}</td>
-                                <td>{{ $record['akhirL'] }}</td>
-                                <td>{{ $record['akhirP'] }}</td>
-                                <td>{{ $record['akhirJM'] }}</td>
+                                <th rowspan="3">Bulan</th>
+                                <th rowspan="3">Kelas</th>
+                                <th colspan="3" rowspan="2">Awal</th>
+                                <th colspan="6">Mutasi</th>
+                                <th colspan="3" rowspan="2">Akhir</th>
                             </tr>
-                        @endforeach
-                    @endforeach
-                </tbody>
-            </table>
+                            <tr>
+                                <th colspan="3">Masuk</th>
+                                <th colspan="3">Keluar</th>
+                            </tr>
+                            <tr>
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+
+                                <th>L</th>
+                                <th>P</th>
+                                <th>JML</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($rekapTahunan as $month => $records)
+                                @foreach ($records as $index => $record)
+                                    <tr>
+                                        @if ($index == 0)
+                                            <td rowspan="{{ count($records) }}"> {{ $month }}</td>
+                                        @endif
+                                        <td>{{ $record['kelas'] }}</td>
+                                        <td>{{ $record['awalL'] }}</td>
+                                        <td>{{ $record['awalP'] }}</td>
+                                        <td>{{ $record['awalJM'] }}</td>
+                                        <td>{{ $record['masukL'] }}</td>
+                                        <td>{{ $record['masukP'] }}</td>
+                                        <td>{{ $record['masukJM'] }}</td>
+                                        <td>{{ $record['keluarL'] }}</td>
+                                        <td>{{ $record['keluarP'] }}</td>
+                                        <td>{{ $record['keluarJM'] }}</td>
+                                        <td>{{ $record['akhirL'] }}</td>
+                                        <td>{{ $record['akhirP'] }}</td>
+                                        <td>{{ $record['akhirJM'] }}</td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <b>*Pilih tahun untuk melihat rekap tahunan</b>
+                @endif
+            </div>
         </div>
     </div>
 </x-dashboard-layout>

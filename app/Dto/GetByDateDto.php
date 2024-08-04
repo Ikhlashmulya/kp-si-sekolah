@@ -2,7 +2,7 @@
 
 namespace App\Dto;
 
-class GetMutasiByDateDto
+class GetByDateDto
 {
     public function __construct(
         public string $month,

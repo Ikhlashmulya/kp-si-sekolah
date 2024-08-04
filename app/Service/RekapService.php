@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Dto\GetMutasiByDateDto;
+use App\Dto\GetByDateDto;
 use App\Models\Kelas;
 use Carbon\Carbon;
 
@@ -17,10 +17,10 @@ class RekapService
         //
     }
 
-    public static function getRekapBulanan(GetMutasiByDateDto $requestGetMutasiByDate): array
+    public static function getRekapBulanan(GetByDateDto $requestGetByDate): array
     {
-        $endOfMonth = Carbon::create($requestGetMutasiByDate->year, $requestGetMutasiByDate->month, 1)->endOfMonth();
-        $startOfMonth = Carbon::create($requestGetMutasiByDate->year, $requestGetMutasiByDate->month, 1)->startOfMonth();
+        $endOfMonth = Carbon::create($requestGetByDate->year, $requestGetByDate->month, 1)->endOfMonth();
+        $startOfMonth = Carbon::create($requestGetByDate->year, $requestGetByDate->month, 1)->startOfMonth();
         $classes = Kelas::all();
         $report = [];
 
@@ -122,7 +122,7 @@ class RekapService
         $current = $startDate->copy();
 
         while ($current->lessThanOrEqualTo($endDate)) {
-            $rekapTahunan[Carbon::createFromFormat('!m', $current->month)->format('F') . "-" . $current->year] = self::getRekapBulanan(new GetMutasiByDateDto($current->month, $current->year));
+            $rekapTahunan[Carbon::createFromFormat('!m', $current->month)->format('F') . "-" . $current->year] = self::getRekapBulanan(new GetByDateDto($current->month, $current->year));
 
             $current->addMonth();
         }
