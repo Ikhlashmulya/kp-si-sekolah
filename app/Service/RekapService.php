@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Dto\GetByDateDto;
 use App\Models\Kelas;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RekapService
 {
@@ -25,10 +27,25 @@ class RekapService
         $report = [];
 
         foreach ($classes as $class) {
+            $resultQueryForJmlAwal = DB::select("
+                SELECT
+                    SUM(CASE WHEN siswa.jenis_kelamin = 'L' THEN 1 ELSE 0 END) AS L_awal,
+                    SUM(CASE WHEN siswa.jenis_kelamin = 'P' THEN 1 ELSE 0 END) AS P_awal,
+                    COUNT(*) AS JML_awal
+                FROM siswa
+                JOIN kelas ON siswa.kelas_id = kelas.nama_kelas
+                WHERE siswa.deleted_at IS NULL
+                AND strftime('%Y-%m', created_at) < ?
+                AND kelas.nama_kelas = ?
+            ", ["$requestGetByDate->year"."-"."$requestGetByDate->month", $class->nama_kelas]);
 
-            $awalL = $class->siswa()->where('jenis_kelamin', 'L')->whereDate('created_at', '<', $startOfMonth)->count();
-            $awalP = $class->siswa()->where('jenis_kelamin', 'P')->whereDate('created_at', '<', $startOfMonth)->count();
-            $awalJM = $awalL + $awalP;
+            $awalL = $resultQueryForJmlAwal[0]->L_awal === null ? 0 : $resultQueryForJmlAwal[0]->L_awal;
+            $awalP = $resultQueryForJmlAwal[0]->P_awal === null ? 0 : $resultQueryForJmlAwal[0]->P_awal;
+            $awalJM = $resultQueryForJmlAwal[0]->JML_awal;
+
+            //     $awalL = $class->siswa()->where('jenis_kelamin', 'L')->whereDate('created_at', '<', $startOfMonth)->count();
+            //     $awalP = $class->siswa()->where('jenis_kelamin', 'P')->whereDate('created_at', '<', $startOfMonth)->count();
+            //     $awalJM = $awalL + $awalP;
 
             $masukL = $class->mutasiMasuk()->whereDate('tgl_masuk', '>=', $startOfMonth)->whereDate('tgl_masuk', '<=', $endOfMonth)->whereHas('siswa', function ($query) {
                 $query->where('jenis_kelamin', 'L');
@@ -113,16 +130,17 @@ class RekapService
         return $sum;
     }
 
-    public static function getRekapTahunan(int $year)
+    public static function getRekapTahunan(int $yearRequest)
     {
-        $startDate = Carbon::create($year, 7, 1);
-        $endDate = Carbon::create($year + 1, 6, 30);
+        $startDate = Carbon::create($yearRequest, 7, 1);
+        $endDate = Carbon::create($yearRequest + 1, 6, 30);
 
         $rekapTahunan = collect();
         $current = $startDate->copy();
 
         while ($current->lessThanOrEqualTo($endDate)) {
-            $rekapTahunan[Carbon::createFromFormat('!m', $current->month)->format('F') . "-" . $current->year] = self::getRekapBulanan(new GetByDateDto($current->month, $current->year));
+            list($month, $year) = explode('-', $current->format('m-Y'));
+            $rekapTahunan[Carbon::createFromFormat('!m', $current->month)->format('F') . "-" . $current->year] = self::getRekapBulanan(new GetByDateDto($month, $year));
 
             $current->addMonth();
         }
