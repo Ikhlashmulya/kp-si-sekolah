@@ -13,8 +13,7 @@
                 <input type="date" class="form-control" name="tgl_keluar" required>
                 <label class="form-label">Keterangan</label>
                 <select class="form-select" aria-label="Jenis Kelamin" name="keterangan">
-                    <option value="siswa baru">siswa baru</option>
-                    <option value="siswa pindahan">siswa pindahan</option>
+                    <option value="pindah">pindah</option>
                     <option value="keluar">keluar</option>
                     <option value="lulus">lulus</option>
                 </select>

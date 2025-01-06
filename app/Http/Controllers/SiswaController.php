@@ -60,7 +60,7 @@ class SiswaController extends Controller
     public function update(UpdateSiswaRequest $request, Siswa $siswa): RedirectResponse
     {
         $validated = $request->validated();
-        $updateMutasiMasuk = $request->only(['asal_sekolah', 'keterangan', 'tgl_masuk']);
+        $updateMutasiMasuk = $request->only(['asal_sekolah', 'keterangan', 'tgl_masuk', 'kelas_id']);
 
         $siswa->fill($validated);
         $siswa->kelas_id = $validated['kelas_id'];

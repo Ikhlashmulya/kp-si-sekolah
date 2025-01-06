@@ -26,6 +26,8 @@ class RekapService
         $classes = Kelas::all();
         $report = [];
 
+        $dateParam = "$requestGetByDate->year"."-"."$requestGetByDate->month";
+
         foreach ($classes as $class) {
             $resultQueryForJmlAwal = DB::select("
                 SELECT
@@ -34,10 +36,10 @@ class RekapService
                     COUNT(*) AS JML_awal
                 FROM siswa
                 JOIN kelas ON siswa.kelas_id = kelas.nama_kelas
-                WHERE siswa.deleted_at IS NULL
-                AND strftime('%Y-%m', created_at) < ?
+                WHERE strftime('%Y-%m', created_at) < ?
+                AND (strftime('%Y-%m', siswa.deleted_at) >= ? OR siswa.deleted_at IS NULL)
                 AND kelas.nama_kelas = ?
-            ", ["$requestGetByDate->year"."-"."$requestGetByDate->month", $class->nama_kelas]);
+            ", [$dateParam, $dateParam, $class->nama_kelas]);
 
             $awalL = $resultQueryForJmlAwal[0]->L_awal === null ? 0 : $resultQueryForJmlAwal[0]->L_awal;
             $awalP = $resultQueryForJmlAwal[0]->P_awal === null ? 0 : $resultQueryForJmlAwal[0]->P_awal;
