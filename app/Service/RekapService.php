@@ -37,8 +37,9 @@ class RekapService
                 FROM siswa
                 JOIN kelas ON siswa.kelas_id = kelas.nama_kelas
                 WHERE strftime('%Y-%m', created_at) < ?
-                AND (strftime('%Y-%m', siswa.deleted_at) >= ? OR siswa.deleted_at IS NULL)
-                AND kelas.nama_kelas = ?
+                AND siswa.id NOT IN (
+                    SELECT siswa_id FROM mutasi_keluar WHERE strftime('%Y-%m', mutasi_keluar.tgl_keluar) < ?
+                ) AND kelas.nama_kelas = ?
             ", [$dateParam, $dateParam, $class->nama_kelas]);
 
             $awalL = $resultQueryForJmlAwal[0]->L_awal === null ? 0 : $resultQueryForJmlAwal[0]->L_awal;
@@ -93,7 +94,7 @@ class RekapService
         return $report;
     }
 
-    public static function sumRekapBulanan(array|null $report): array|null
+    public static function sumRekapBulanan($report): array|null
     {
         if (!$report) {
             return null;

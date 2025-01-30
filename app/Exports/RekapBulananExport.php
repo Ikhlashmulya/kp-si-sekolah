@@ -12,7 +12,8 @@ class RekapBulananExport implements FromView
         protected object $mutasiMasuk,
         protected object $mutasiKeluar,
         protected array $rekap,
-        protected string $date
+        protected string $date,
+        protected mixed $sumRekap
     ) {
     }
 
@@ -22,7 +23,8 @@ class RekapBulananExport implements FromView
             'rekapMutasi' => $this->rekap,
             'date' => $this->date,
             'mutasiMasuk' => $this->mutasiMasuk,
-            'mutasiKeluar' => $this->mutasiKeluar
+            'mutasiKeluar' => $this->mutasiKeluar,
+            'sumRekap' => $this->sumRekap
         ]);
     }
 }

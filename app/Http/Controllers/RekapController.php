@@ -51,7 +51,7 @@ class RekapController extends Controller
         // dd($years);
 
 
-        return view('rekap.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'selectedDate', 'selectedYear','rekapMutasi', 'date', 'sumRekap', 'rekapTahunan', 'years'));
+        return view('rekap.index', compact('mutasiMasuk', 'mutasiKeluar', 'dates', 'selectedDate', 'selectedYear', 'rekapMutasi', 'date', 'sumRekap', 'rekapTahunan', 'years'));
     }
 
     public function exportRekapBulanan(string $date)
@@ -62,9 +62,10 @@ class RekapController extends Controller
         $mutasiMasuk = MutasiService::getMutasiMasukByDate($requestGetByDate);
         $mutasiKeluar = MutasiService::getMutasiKeluarByDate($requestGetByDate);
         $rekapMutasi = RekapService::getRekapBulanan($requestGetByDate);
+        $sumRekap = RekapService::sumRekapBulanan($rekapMutasi);
 
         $date = Carbon::create($year, $month)->format('F-Y');
-        return Excel::download(new RekapBulananExport($mutasiMasuk, $mutasiKeluar, $rekapMutasi, $date), "rekap-$date.xlsx");
+        return Excel::download(new RekapBulananExport($mutasiMasuk, $mutasiKeluar, $rekapMutasi, $date, $sumRekap), "rekap-$date.xlsx");
     }
 
     public function exportRekapTahunan(int $year)

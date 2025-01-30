@@ -16,7 +16,7 @@
             </select>
         </form>
 
-        <div class="card mb-4 mt-5">
+        <div class="card mb-4 mt-3">
             <div class="card-header">
                 Mutasi Masuk
             </div>
@@ -35,19 +35,6 @@
                             <th>Keterangan</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>No Induk</th>
-                            <th>NISN</th>
-                            <th>Nama Lengkap</th>
-                            <th>JK</th>
-                            <th>Kelas</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Asal Sekolah</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach ($mutasiMasuk as $mm)
                             <tr>
@@ -84,19 +71,6 @@
                             <th>Keterangan</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>No Induk</th>
-                            <th>NISN</th>
-                            <th>Nama Lengkap</th>
-                            <th>JK</th>
-                            <th>Kelas</th>
-                            <th>Tanggal Keluar</th>
-                            <th>Tujuan Sekolah</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach ($mutasiKeluar as $mk)
                             <tr>
